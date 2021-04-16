@@ -1,11 +1,19 @@
 /* eslint-disable prettier/prettier */
 
 import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
-import { List, ListItem } from '@ui-kitten/components';
+import { StyleSheet, View } from 'react-native';
+import {
+    List,
+    ListItem,
+    Button,
+} from '@ui-kitten/components';
 import axios from 'axios';
 
-function TaskList() {
+function TaskList(props) {
+    const {
+        showTaskForm,
+    } = props;
+
     const [tasks, setTasks] = useState([]);
 
     const styles = StyleSheet.create({
@@ -13,6 +21,10 @@ function TaskList() {
             minWidth: '100%',
         },
     });
+
+    const handleOnNewButtonPress = () => {
+        showTaskForm();
+    };
 
     const renderItem = ({ item }) => (
         <ListItem title={item.Name} />
@@ -34,11 +46,16 @@ function TaskList() {
     }, []);
 
     return (
-        <List
-            style={styles.container}
-            data={tasks}
-            renderItem={renderItem}
-        />
+        <View>
+            <List
+                style={styles.container}
+                data={tasks}
+                renderItem={renderItem}
+            />
+            <Button onPress={handleOnNewButtonPress}>
+                Novo
+            </Button>
+        </View>
     );
 }
 
