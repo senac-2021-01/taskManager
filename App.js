@@ -15,9 +15,16 @@ import TaskForm from './src/components/TaskForm';
 
 function App() {
     const [content, setContent] = useState('TASK-LIST');
+    const [selectedTask, setSelectedTask] = useState(null);
 
-    const showTaskForm = () => {
+    const showTaskForm = task => {
+        setSelectedTask(task);
         setContent('TASK-FORM');
+    };
+
+    const showTaskList = () => {
+        setSelectedTask(null);
+        setContent('TASK-LIST');
     };
 
     const styles = StyleSheet.create({
@@ -44,7 +51,10 @@ function App() {
                 );
             case 'TASK-FORM':
                 return (
-                    <TaskForm />
+                    <TaskForm
+                        task={selectedTask}
+                        showTaskList={showTaskList}
+                    />
                 );
             default:
                 return (

@@ -6,8 +6,8 @@ import { Input as KittenInput } from '@ui-kitten/components';
 
 const Input = forwardRef((props, ref) => {
     const {
-        placeholder,
         defaultValue,
+        ...other
     } = props;
 
     const [value, setValue] = useState(defaultValue || '');
@@ -22,7 +22,7 @@ const Input = forwardRef((props, ref) => {
 
     return (
         <KittenInput
-            placeholder={placeholder}
+            {...other}
             value={value}
             onChangeText={nextValue => setValue(nextValue)}
         />

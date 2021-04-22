@@ -1,4 +1,6 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable jsx-quotes */
+/* eslint-disable prettier/prettier */
 
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -17,8 +19,35 @@ function TaskList(props) {
     const [tasks, setTasks] = useState([]);
 
     const styles = StyleSheet.create({
-        container: {
+        mainView: {
+            width: '100%',
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        listView: {
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        buttonView: {
+            width: '100%',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            flexDirection: 'row',
+            padding: 10,
+        },
+        buttonActionView: {
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            flexDirection: 'row',
+        },
+        buttonUpdate: {
+            marginRight: 10,
+        },
+        list: {
             minWidth: '100%',
+            backgroundColor: '#FFF',
         },
     });
 
@@ -26,8 +55,31 @@ function TaskList(props) {
         showTaskForm();
     };
 
+    const renderItemActions = item => {
+        return (
+            <View style={styles.buttonActionView}>
+                <Button
+                    size='tiny'
+                    style={styles.buttonUpdate}
+                    onPress={() => showTaskForm(item)}
+                >
+                    Alterar
+                </Button>
+                <Button
+                    size='tiny'
+                    onPress={() => showTaskForm(item)}
+                >
+                    Excluir
+                </Button>
+            </View>
+        );
+    };
+
     const renderItem = ({ item }) => (
-        <ListItem title={item.Name} />
+        <ListItem
+            title={item.Name}
+            accessoryRight={() => renderItemActions(item)}
+        />
     );
 
     useEffect(() => {
@@ -46,15 +98,19 @@ function TaskList(props) {
     }, []);
 
     return (
-        <View>
-            <List
-                style={styles.container}
-                data={tasks}
-                renderItem={renderItem}
-            />
-            <Button onPress={handleOnNewButtonPress}>
-                Novo
+        <View style={styles.mainView}>
+            <View style={styles.listView}>
+                <List
+                    style={styles.list}
+                    data={tasks}
+                    renderItem={renderItem}
+                />
+            </View>
+            <View style={styles.buttonView}>
+                <Button onPress={handleOnNewButtonPress}>
+                    Novo
             </Button>
+            </View>
         </View>
     );
 }
