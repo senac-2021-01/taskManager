@@ -14,6 +14,7 @@ import axios from 'axios';
 function TaskList(props) {
     const {
         showTaskForm,
+        showConfirmModal,
     } = props;
 
     const [tasks, setTasks] = useState([]);
@@ -67,7 +68,7 @@ function TaskList(props) {
                 </Button>
                 <Button
                     size='tiny'
-                    onPress={() => showTaskForm(item)}
+                    onPress={() => showConfirmModal()}
                 >
                     Excluir
                 </Button>
