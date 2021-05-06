@@ -1,6 +1,10 @@
 /* eslint-disable prettier/prettier */
 
-import React, { createRef, useState } from 'react';
+import React, {
+    createRef,
+    Fragment,
+    useState,
+} from 'react';
 import { StyleSheet } from 'react-native';
 import {
     ApplicationProvider,
@@ -78,7 +82,7 @@ function App() {
     };
 
     return (
-        <>
+        <Fragment>
             <IconRegistry icons={EvaIconsPack} />
             <ApplicationProvider {...eva} theme={eva.light}>
                 <Layout style={styles.container}>
@@ -86,7 +90,7 @@ function App() {
                     <ConfirmModal ref={confirmModalRef} />
                 </Layout>
             </ApplicationProvider>
-        </>
+        </Fragment>
     );
 }
 
