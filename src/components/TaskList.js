@@ -37,7 +37,7 @@ function TaskList(props) {
         },
         buttonView: {
             width: '100%',
-            justifyContent: 'flex-end',
+            justifyContent: 'space-between',
             alignItems: 'center',
             flexDirection: 'row',
             padding: 10,
@@ -66,6 +66,10 @@ function TaskList(props) {
 
         setTasks(data.results);
     }, []);
+
+    const handleOnUpdateButtonPress = () => {
+        getTasks();
+    };
 
     const handleOnNewButtonPress = () => {
         showTaskForm();
@@ -125,6 +129,9 @@ function TaskList(props) {
                 />
             </View>
             <View style={styles.buttonView}>
+                <Button onPress={handleOnUpdateButtonPress}>
+                    Atualizar
+                </Button>
                 <Button onPress={handleOnNewButtonPress}>
                     Novo
                 </Button>
