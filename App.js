@@ -38,8 +38,16 @@ function App() {
         setContent('TASK-LIST');
     };
 
-    const showConfirmModal = () => {
-        getConfirmModalRef().show();
+    const showConfirmModal = ({
+        message,
+        onYes,
+        onNo,
+    }) => {
+        getConfirmModalRef().show({
+            message,
+            onYes,
+            onNo,
+        });
     };
 
     const styles = StyleSheet.create({

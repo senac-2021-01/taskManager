@@ -2,7 +2,11 @@
 /* eslint-disable jsx-quotes */
 /* eslint-disable prettier/prettier */
 
-import React, { useEffect, useState } from 'react';
+import React, {
+    useCallback,
+    useEffect,
+    useState,
+} from 'react';
 import { StyleSheet, View } from 'react-native';
 import {
     List,
@@ -52,6 +56,17 @@ function TaskList(props) {
         },
     });
 
+    const getTasks = useCallback(async () => {
+        const { data } = await axios.get('https://parseapi.back4app.com/classes/Task', {
+            headers: {
+                'X-Parse-Application-Id': 'wpPi20JkWCYZ1wTsEnfZNWnqqVOOhJTo2kk3jagc',
+                'X-Parse-REST-API-Key': 'FRtAa3gHvLK57PfDvE6WWKRu1OknYwc5g1DFaC7N',
+            },
+        });
+
+        setTasks(data.results);
+    }, []);
+
     const handleOnNewButtonPress = () => {
         showTaskForm();
     };
@@ -68,7 +83,20 @@ function TaskList(props) {
                 </Button>
                 <Button
                     size='tiny'
-                    onPress={() => showConfirmModal()}
+                    onPress={() => showConfirmModal({
+                        message: `Deseja realmente excluir a tarefa ${item.Name}`,
+                        onYes: async () => {
+                            await axios.delete(`https://parseapi.back4app.com/classes/Task/${item.objectId}`, {
+                                headers: {
+                                    'X-Parse-Application-Id': 'wpPi20JkWCYZ1wTsEnfZNWnqqVOOhJTo2kk3jagc',
+                                    'X-Parse-REST-API-Key': 'FRtAa3gHvLK57PfDvE6WWKRu1OknYwc5g1DFaC7N',
+                                },
+                            });
+
+                            await getTasks();
+                        },
+                        onNo: () => { },
+                    })}
                 >
                     Excluir
                 </Button>
@@ -84,19 +112,8 @@ function TaskList(props) {
     );
 
     useEffect(() => {
-        const getTasks = async () => {
-            const { data } = await axios.get('https://parseapi.back4app.com/classes/Task', {
-                headers: {
-                    'X-Parse-Application-Id': 'wpPi20JkWCYZ1wTsEnfZNWnqqVOOhJTo2kk3jagc',
-                    'X-Parse-REST-API-Key': 'FRtAa3gHvLK57PfDvE6WWKRu1OknYwc5g1DFaC7N',
-                },
-            });
-
-            setTasks(data.results);
-        };
-
         getTasks();
-    }, []);
+    }, [getTasks]);
 
     return (
         <View style={styles.mainView}>
@@ -110,7 +127,7 @@ function TaskList(props) {
             <View style={styles.buttonView}>
                 <Button onPress={handleOnNewButtonPress}>
                     Novo
-            </Button>
+                </Button>
             </View>
         </View>
     );
