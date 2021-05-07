@@ -42,6 +42,9 @@ function TaskList(props) {
             flexDirection: 'row',
             padding: 10,
         },
+        buttonNew: {
+            borderRadius: 50,
+        },
         buttonActionView: {
             justifyContent: 'flex-end',
             alignItems: 'center',
@@ -132,8 +135,12 @@ function TaskList(props) {
                 <Button onPress={handleOnUpdateButtonPress}>
                     Atualizar
                 </Button>
-                <Button onPress={handleOnNewButtonPress}>
-                    Novo
+                <Button
+                    size='giant'
+                    style={styles.buttonNew}
+                    onPress={handleOnNewButtonPress}
+                >
+                    +
                 </Button>
             </View>
         </View>
